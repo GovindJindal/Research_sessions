@@ -8,55 +8,45 @@
 </head>
 <body>
 
-    <!-- Navbar -->
     <nav id="navbar">
-        <h1>🎨 Theme Switcher</h1>
+        <div class="logo">ThemeSwitcher</div>
         <div class="theme-buttons">
-            <button class="theme-btn" onclick="applyTheme('light')">☀️ Light Mode</button>
-            <button class="theme-btn" onclick="applyTheme('dark')">🌙 Dark Mode</button>
-            <button class="theme-btn" onclick="applyTheme('tropical')">🌴 Tropical Mode</button>
+            <button onclick="setTheme('light')" id="btn-light">Light</button>
+            <button onclick="setTheme('dark')" id="btn-dark">Dark</button>
+            <button onclick="setTheme('tropical')" id="btn-tropical">Tropical</button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <h2>Welcome to Theme Switcher!</h2>
-        <p>Click the buttons above to switch between Light, Dark, and Tropical themes. Watch as the entire page transforms with beautiful colors!</p>
-    </section>
+    <header class="hero" id="hero">
+        <h1>Welcome to the Theme Switcher</h1>
+        <p>Click the buttons in the navbar to swap styles.</p>
+    </header>
 
-    <!-- Features Section -->
-    <section class="features">
-        <h3>Features</h3>
-        <div class="feature-cards">
-            <div class="card" id="card1">
-                <h4>🎨 Beautiful Themes</h4>
-                <p>Experience three stunning color palettes designed for optimal visual appeal and readability.</p>
+    <div class="container">
+        <div class="grid">
+            <div class="card">
+                <h3>Feature One</h3>
+                <p>This card adapts to the theme background color defined in your object.</p>
             </div>
-            <div class="card" id="card2">
-                <h4>⚡ Instant Switch</h4>
-                <p>Themes apply instantly with smooth transitions, creating a delightful user experience.</p>
+            <div class="card">
+                <h3>Feature Two</h3>
+                <p>Make sure the text remains readable against the card background.</p>
             </div>
-            <div class="card" id="card3">
-                <h4>🌈 Color Harmony</h4>
-                <p>Each theme is carefully crafted with harmonious colors that work perfectly together.</p>
+            <div class="card">
+                <h3>Feature Three</h3>
+                <p>The entire layout uses CSS variables updated by your JavaScript.</p>
             </div>
         </div>
-    </section>
 
-    <!-- Color Palette Section -->
-    <section class="palette-section">
-        <h3>Current Theme Palette</h3>
-        <div class="palette-boxes">
-            <div class="palette-box" id="palette1">Color 1</div>
-            <div class="palette-box" id="palette2">Color 2</div>
-            <div class="palette-box" id="palette3">Color 3</div>
+        <div style="text-align: center;">
+            <h3>Current Palette</h3>
+            <div class="palette-display">
+                <div id="p-box-1" class="color-box"></div>
+                <div id="p-box-2" class="color-box"></div>
+                <div id="p-box-3" class="color-box"></div>
+            </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>© 2024 Theme Switcher Assignment | Built with ❤️</p>
-    </footer>
+    </div>
 <script src="script.js"></script>
 </body>
 </html>
