@@ -1,0 +1,95 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.nav_up{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 70px;
+    align-items: center;
+    padding-left: 10px;
+}
+li{
+    list-style: none;
+    display: inline;
+    height: 30px;
+    width:60px;
+}
+button{
+    height: 30px;
+    width:60px;
+}
+.nav_down{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:center;
+    row-gap: 10px;
+    height: 230px;
+}
+
+.cont{
+    height: 280px;
+    display:flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+    column-gap: 20px;
+}
+.a, .b, .c{
+    height: 170px;
+    width:250px;
+    border-radius: 5%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5px;
+    font-size: small;
+}
+.cont> .h3-1,p{
+    margin-left: 5px;
+}
+.h3-1{
+    font-size: 15px;
+    font-weight: bold;
+}
+.footer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 10px;
+    height: 30vh;
+    
+}
+.footer>h3{
+    margin-top: 15px;
+}
+.palette{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+.d, .e, .f{
+    height: 90px;
+    width:90px;
+    border-radius: 50%;
+}
+.btn{
+    background-color: #e0e0e0;
+    color: #333; 
+    border:0px;
+}
+.btn1{
+    background-color: #333;
+    color: #fff;
+    border:0px;
+}
+.btn2{
+    background-color: #ff8c42;
+    color: #fff;
+    border:0px;
+}
