@@ -13,16 +13,17 @@ function App(){
   setCount(count =0);
   };
 
-  return
+  return (
     <div>
-    <div>className="app"
+    <div className="app">
       <h1 style={{
-          fontsize: "Irem"
+        fontSize : "1rem"
       }}>Counter</h1></div>
-    {count}
-    <div><button onclick={increment}>Increment</button>
-         <button onclick={decrement}>Decrement</button>
-         <button onclick={reset}>Reset</button>
+      {count}
+      <div><button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+      <button onClick={reset}>Reset</button>
     </div>
     </div>
+  )
 }
