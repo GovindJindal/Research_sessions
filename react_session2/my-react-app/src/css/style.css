@@ -1,0 +1,145 @@
+/* ----- RESET (keeps layout consistent across browsers) ----- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: #0d0d0d;
+  color: #fff;
+  padding: 20px;
+}
+
+/* ----- APP LAYOUT ----- */
+.app {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+
+/* ----- SEARCH BAR & FORM ENHANCEMENTS ----- */
+form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  width: 60%;
+  padding: 12px 15px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  background-color: #1b1b1b;
+  color: white;
+  transition: border 0.2s ease, box-shadow 0.2s ease; /* Added transition */
+}
+
+input[type="text"]:focus {
+  border: 1px solid #e50914; /* Use brand color for focus */
+  box-shadow: 0 0 5px rgba(229, 9, 20, 0.5); /* Subtle glowing effect */
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+button:hover {
+  background-color: #b20710;
+}
+
+button:focus {
+    outline: 2px solid #fff; /* Accessibility: White outline for contrast */
+    outline-offset: 2px;
+}
+
+/* ----- MOVIE GRID ----- */
+.movie-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+  transition: opacity 0.4s ease-in-out; /* For smoother loading/filtering */
+}
+
+/* ----- MOVIE CARD ENHANCEMENTS ----- */
+.movie-card {
+  background-color: #1a1a1a;
+  padding: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  /* Smoother, diffused shadow with a subtle red border on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 0 0 2px #e50914; 
+}
+
+/* Card image */
+.movie-card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Movie title with Truncation */
+.movie-card h3 {
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  color: #fff;
+  /* Ensure long titles are handled gracefully */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 5px;
+}
+
+/* ----- RESPONSIVENESS (Mobile Optimizations) ----- */
+@media (max-width: 600px) {
+  body {
+    padding: 15px;
+  }
+
+  h1 {
+    font-size: 1.8rem; 
+  }
+
+  form {
+    flex-direction: column; /* Stack search input and button */
+    gap: 15px;
+  }
+
+  input[type="text"] {
+    width: 100%; 
+  }
+
+  button {
+    width: 100%; 
+  }
+  
+  .movie-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+    gap: 15px;
+  }
+}
