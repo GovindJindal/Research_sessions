@@ -12,8 +12,8 @@ document.getElementById("c").addEventListener("click", function() {
     changeColor('green');
 })
 document.getElementById("d").addEventListener("click", function() {
-    changeColor('voilet');
+    changeColor('violet');
 })
 document.getElementById("e").addEventListener("click", function() {
-    changeColor('magenta');
+    changeColor('Blue');
 })

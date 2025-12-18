@@ -2,51 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Theme Switcher Assignment</title>
+    <meta name="viewport" content="width=device-width, initial-scale=i.0">
+    <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <nav id="navbar">
-        <div class="logo">ThemeSwitcher</div>
-        <div class="theme-buttons">
-            <button onclick="setTheme('light')" id="btn-light">Light</button>
-            <button onclick="setTheme('dark')" id="btn-dark">Dark</button>
-            <button onclick="setTheme('tropical')" id="btn-tropical">Tropical</button>
+    <nav class="nav_up">
+        <div><h3>Theme Switcher</h3></div>
+        <div>
+            <ul>
+            <li><button class="btn">Light</button></li>
+            <li><button class="btn1">Dark</button></li>
+            <li><button class="btn2">Tropical</button></li>
+            </ul>
         </div>
     </nav>
-
-    <header class="hero" id="hero">
-        <h1>Welcome to the Theme Switcher</h1>
+    <div class="nav_down">
+        <h1>Welcome To Theme Switcher</h1>
         <p>Click the buttons in the navbar to swap styles.</p>
-    </header>
-
-    <div class="container">
-        <div class="grid">
-            <div class="card">
-                <h3>Feature One</h3>
-                <p>This card adapts to the theme background color defined in your object.</p>
-            </div>
-            <div class="card">
-                <h3>Feature Two</h3>
-                <p>Make sure the text remains readable against the card background.</p>
-            </div>
-            <div class="card">
-                <h3>Feature Three</h3>
-                <p>The entire layout uses CSS variables updated by your JavaScript.</p>
-            </div>
+    </div>
+    <main>
+    <div class="cont">
+        <div class="a">
+            <p class="h3-1">Feature One</p><br>
+            <p>This card adapts to the theme background color defined in your object.</p>
         </div>
-
-        <div style="text-align: center;">
-            <h3>Current Palette</h3>
-            <div class="palette-display">
-                <div id="p-box-1" class="color-box"></div>
-                <div id="p-box-2" class="color-box"></div>
-                <div id="p-box-3" class="color-box"></div>
-            </div>
+        <div class="b">
+            <p class="h3-1">Feature Two</p><br>
+            <p>This card adapts to the theme background color defined in your object.</p>
+        </div>
+        <div class="c">
+            <p class="h3-1">Feature Three</p><br>
+            <p>This card adapts to the theme background color defined in your object.</p>
         </div>
     </div>
-<script src="script.js"></script>
+    <div class="footer">
+        <h3>Current Palette</h3>
+        <div class="palette">
+            <div class="d"></div>
+            <div class="e"></div>
+            <div class="f"></div>
+        </div>
+    </div>
+    </main>
+
+
+    <script src="script.js"></script>
 </body>
 </html>
