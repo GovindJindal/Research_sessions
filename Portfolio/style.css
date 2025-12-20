@@ -370,7 +370,6 @@ body {
     top: 390px;
     left: 520px;
     font-size: 18px;
-    font-style: italic;
 }
 
 
@@ -384,22 +383,3 @@ body {
     left: 0;
     z-index: 10;
 }
-/* .lang{
-    height: 100vh;
-    width: 100%;
-    background: linear-gradient(to right, rgb(0, 0, 0) 95%, #E6C85C 5% );
-    
-    position: absolute;
-    top: 200vh;
-    left: 0;
-    z-index: 10;
-} */
-/* .achi{
-    height: 100vh;
-    width: 100%;
-    background: linear-gradient(to right, rgb(0, 0, 0) 95%, #4CC5D9  5% );
-    position: absolute;
-    top: 300vh;
-    left: 0;
-    z-index: 10;
-} */
