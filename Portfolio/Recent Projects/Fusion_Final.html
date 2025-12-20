@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusion Music App</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;550;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* --- CSS Variables --- */
+        :root {
+            --bg-color: #000000;
+            --text-color: #FFFFFF;
+            --light-text-color: #BBBBBB;
+            --accent-purple: #8B008B;
+            --accent-pink: #FF1493;
+            --gradient-start-trending: #f09433;
+            --gradient-middle-trending: #e6683c;
+            --gradient-end-trending: #fcaf45;
+            --gradient-start-popular: #FF69B4;
+            --gradient-end-popular: #BA55D3;
+            --gradient-start-recently: #FF4500;
+            --gradient-end-recently: #FF8C00;
+        }
+
+        /* --- Base & Layout Styles --- */
+        html {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif; /* Using Poppins as a base for consistency */
+            background-color: #121212;
+            color: var(--text-color);
+            margin: 0;
+            height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Prevent body from scrolling */
+        }
+        
+        .page-container {
+            display: flex;
+            height: 100%;
+            padding: 20px;
+            gap: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- MODIFIED: Main Content Wrapper --- */
+        /* This now acts as the right column, taking up remaining space and scrolling independently */
+        .main-content-wrapper {
+            flex-grow: 1; /* Allows this section to grow and fill available space */
+            display: flex;
+            gap: 30px;
+            overflow-y: auto; /* Enables vertical scrolling ONLY for this section */
+            padding-right: 15px; /* Space for the scrollbar */
+        }
+
+        /* Custom Scrollbar for the main content area */
+        .main-content-wrapper::-webkit-scrollbar {
+            width: 8px;
+        }
+        .main-content-wrapper::-webkit-scrollbar-thumb {
+            background-color: #444;
+            border-radius: 10px;
+        }
+        .main-content-wrapper::-webkit-scrollbar-track {
+            background-color: #222;
+            border-radius: 10px;
+        }
+
+
+        /* --- Sidebar Column (Left) --- */
+        .sidebar-column {
+            flex-shrink:0; /* Prevents the sidebar from shrinking */
+            display: flex;
+            flex-direction: column;
+            height: 95vh; /* Set a fixed height smaller than the viewport */
+            align-self: center; /* Vertically center the column in the page container */
+        }
+        
+        /* --- MODIFIED: Gradient Border Wrapper --- */
+        .sidebar-wrapper {
+            width: 320px;
+            padding: 4px;
+            background: linear-gradient(160deg, #00ffc2, #0075ff, #ff00e6);
+            border-radius: 40px;
+            box-shadow: 0 8px 32px 0 rgba(0, 204, 255, 0.37);
+            box-sizing: border-box;
+            /* REMOVED flex-grow: 1; to prevent it from pushing sibling elements out of view */
+        }
+
+        /* --- Main Sidebar Container --- */
+        .sidebar {
+            background-color: #000;
+            color: #fff;
+            width: 100%;
+            height:100%;
+            border-radius: 36px;
+            padding: 25px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* --- Logo Styles --- */
+        .sidebar-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .sidebar-logo h1 {
+            font-family: 'Permanent Marker', cursive;
+            font-size: 2.5rem;
+            margin: 0;
+            letter-spacing: 3px;
+            background: linear-gradient(160deg, #00ffc2, #ff00e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+
+        .sidebar-nav { flex-grow: 1; }
+        .sidebar ul { list-style-type: none; padding: 0; margin: 0; }
+        .sidebar ul li { margin-bottom: 5px; }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 10px;
+            transition: background-color 0.2s ease;
+        }
+        .sidebar a:hover { background-color: #282828; }
+
+        .nav-item-text { font-size: 1.25rem; font-weight: 600; }
+        .sidebar a i {
+            font-size: 1.25rem;
+            width: 35px;
+            margin-right: 15px;
+            text-align: center;
+        }
+        
+        .library-submenu { margin-top: 10px; padding-left: 25px; }
+        .library-submenu a { color: #b3b3b3; font-size: 1rem; font-weight: 400; padding: 8px 15px; }
+        .library-submenu a i { font-size: 1rem; color: #ef4444; }
+
+        .icon-home, .icon-radio, .icon-library { color: #ef4444; }
+
+        .sidebar-info-footer {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            color: #b3b3b3;
+            padding: 0 15px;
+        }
+        .sidebar-info-footer a { display: block; padding: 3px 0; color: inherit; text-decoration: none; }
+        .sidebar-info-footer a:hover { background: none; color: #fff; }
+        .copyright { margin-top: 15px; font-size: 0.8rem; }
+
+        /* Social Media Icons */
+        .social-media-container {
+            width: 320px;
+            margin-top: 20px;
+            box-sizing: border-box;
+            padding: 0 4px;
+        }
+        .social-media {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #181818;
+            border-radius: 50px;
+            padding: 10px;
+        }
+        .social-media a { font-size: 1.1rem; padding: 5px; color: #fff; }
+        .social-media a:hover { background: none; color: #00ffc2; }
+        
+        /* --- Music Discovery Section Styles (Center) --- */
+        .discovery-container {
+            max-width: 670px;
+            flex-shrink: 0; /* Prevents shrinking past its max-width */
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #1a1a1a;
+            border-radius: 30px;
+            padding: 10px 15px;
+            margin-bottom: 30px;
+        }
+        .search-bar img { width: 18px; height: 18px; margin-right: 10px; filter: invert(60%); }
+        .search-bar input {
+            flex-grow: 1; background: transparent; border: none;
+            color: var(--light-text-color); font-size: 20px; outline: none;
+            font-family: 'Montserrat', sans-serif; font-weight: 550;
+        }
+
+        .section-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px;
+        }
+        .section-header h2 { font-size: 22px; font-weight: 600; margin: 0; font-family: 'Montserrat', sans-serif; }
+        .section-header .show-all { color: var(--light-text-color); text-decoration: none; font-size: 14px; font-weight: 500; }
+
+        .card-list {
+            display: flex; gap: 15px; overflow-x: auto;
+            -webkit-overflow-scrolling: touch; padding-bottom: 20px;
+            margin-bottom: 30px; scroll-snap-type: x mandatory;
+        }
+        .card-list::-webkit-scrollbar { height: 6px; }
+        .card-list::-webkit-scrollbar-thumb { background-color: #444; border-radius: 10px; }
+        .card-list::-webkit-scrollbar-track { background-color: #222; border-radius: 10px; }
+
+        .card { flex-shrink: 0; width: 120px; text-align: left; scroll-snap-align: start; }
+        .card-image-wrapper {
+            width: 120px; height: 120px; border-radius: 15px;
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+            margin-bottom: 8px; position: relative; background-color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .card-image-wrapper.circle { border-radius: 50%; }
+        .card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .card-title {
+            font-size: 14px; font-weight: 550; color: var(--text-color); margin: 0;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Montserrat', sans-serif;
+        }
+        .card-subtitle {
+            font-size: 12px; font-weight: 400; color: var(--light-text-color); margin: 0;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: 'Montserrat', sans-serif;
+        }
+        
+        /* --- Player Container Styles (Right) --- */
+        .player-container {
+            width: 350px;
+            background: linear-gradient(to bottom, #2DD4BF, #37D645);
+            border-radius: 30px;
+            padding: 10px 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: white;
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            flex-shrink: 0;
+            align-self: flex-start; /* Aligns player to the top of its column */
+        }
+
+        .header {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5em; font-weight: bold;
+            margin-bottom: 25px; color: white;
+        }
+        .album-art-wrapper {
+            width: 90%; max-width: 280px; border-radius: 15px;
+            overflow: hidden; margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .album-art { width: 100%; display: block; }
+        .song-details { margin-bottom: 25px; }
+
+        .song-title {
+            font-family: 'Permanent Marker', cursive; font-size: 2.8em;
+            font-weight: normal; margin: 0; color: white;
+            letter-spacing: 2px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .artist-name {
+            font-family: 'Montserrat', sans-serif; font-size: 1.2em;
+            margin-top: 5px; color: rgba(255, 255, 255, 0.8);
+        }
+        .progress-bar-container { width: 90%; margin-bottom: 25px; }
+        .progress-bar { height: 5px; background-color: rgba(255, 255, 255, 0.4); border-radius: 5px; position: relative; }
+        .progress {
+            width: 50%; height: 100%; background-color: white;
+            border-radius: 5px; position: absolute; left: 0; top: 0;
+        }
+        .time-stamps {
+            display: flex; justify-content: space-between; font-size: 0.9em;
+            margin-top: 8px; color: rgba(255, 255, 255, 0.8);
+        }
+        .controls { display: flex; align-items: center; justify-content: center; gap: 30px; }
+        .controls i {
+            font-size: 2.2em; cursor: pointer; color: white;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+        }
+        .play-icon { font-size: 2.5em; color: #37D645; }
+        .bottom-icons {
+            width: 100%; display: flex; justify-content: space-between;
+            padding: 0 15px; box-sizing: border-box; margin-top: 25px;
+        }
+        .bottom-icons i {
+            font-size: 1.8em; cursor: pointer; color: rgba(255, 255, 255, 0.8);
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.1));
+        }
+
+        /* --- NEW: Header and Content Layout --- */
+        .main-content-column {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding-bottom: 20px;
+        }
+        
+        .content-body {
+            display: flex;
+            gap: 30px;
+        }
+
+        /* --- NEW: Auth Buttons & Icon Styles --- */
+        .auth-btn {
+            text-decoration: none;
+            color: var(--text-color);
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 10px 30px;
+            border-radius: 50px;
+            margin-left: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+        .auth-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .signup-btn {
+            border: 2px solid transparent;
+            background: linear-gradient(var(--bg-color), var(--bg-color)) padding-box,
+                        linear-gradient(to right, #ff2525, #9b00e8) border-box;
+        }
+
+        .login-btn {
+            background: linear-gradient(to right, #d32d56, #8134af);
+            border: none;
+        }
+
+        .user-icon a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .user-icon i {
+            font-size: 1.8rem;
+            margin-left: 25px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+    
+        <div class="sidebar-column">
+            <div class="sidebar-wrapper">
+                <aside class="sidebar">
+                    <div class="sidebar-logo">
+                        <h1>FUSION</h1>
+                    </div>
+                    <div class="sidebar-nav">
+                        <ul>
+                            <li><a href="#"><i class="fa-solid fa-house icon-home"></i> <span class="nav-item-text">Home</span></a></li>
+                            <li><a href="#"><i class="fa-solid fa-radio icon-radio"></i> <span class="nav-item-text">Radio</span></a></li>
+                            <li>
+                                <a href="#"><i class="fa-solid fa-grip icon-library"></i> <span class="nav-item-text">Library</span></a>
+                                <ul class="library-submenu">
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-clock-rotate-left"></i> Recently Added</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-music"></i> Songs</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-compact-disc"></i> Albums</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-microphone-lines"></i> Artists</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-folder-plus"></i> Playlists</a></li>
+                                    <li><a href="#">&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa-solid fa-podcast"></i> Podcasts</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul style="margin-top: 9px;">
+                            <li><a href="#"><i class="fa-solid fa-plus"></i> <span class="nav-item-text">Create</span></a></li>
+                            <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i> <span class="nav-item-text">Explore</span></a></li>
+                            <li><a href="#"><i class="fa-solid fa-gear"></i> <span class="nav-item-text">Settings</span></a></li>
+                        </ul>
+                    </div>
+                    
+        
+                </aside>
+            </div>
+            <div class="social-media-container">
+                <div class="social-media">
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-content-wrapper">
+            <div class="main-content-column">
+            
+                <header class="top-header">
+                    <a href="#" class="auth-btn signup-btn">Sign Up</a>
+                    <a href="#" class="auth-btn login-btn">Log In</a>
+                    <div class="user-icon">
+                        <a href="#"><i class="fas fa-user"></i></a>
+                    </div>
+                </header>
+
+                <div class="content-body">
+                    <div class="discovery-container">
+                        <div class="search-bar">
+                            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNhYWFhYWEiIHN0cm9va2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTEiIGN5PSIxMSIgcj0iOCI+PC9jaXJjbGU+PGxpbmUgeDE9IjIxIiB5MT0iMjEiIHgyPSIxNi42NSIgeTI9IjE2LjY1Ij48L2xpbmU+PC9zdmc+" alt="Search">
+                            <input type="text" placeholder="What would you like to play?">
+                        </div>
+
+                        <div class="section-header">
+                            <h2>Trending</h2>
+                            <a href="#" class="show-all">Show All</a>
+                        </div>
+                        <div class="card-list">
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://i.scdn.co/image/ab67616d0000b2733dc5639cb321a69b721bed92" alt="For A Reason Album Art">
+                                </div>
+                                <p class="card-title">For A Reason</p>
+                                <p class="card-subtitle">Karan Aujla</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.genius.com/a9143117b858d486a6869008f9c83f88.1000x1000x1.png" alt="Pardesiyan Album Art">
+                                </div>
+                                <p class="card-title"> Pardesiya</p>
+                                <p class="card-subtitle">Sachin Jigar, Sonu Nigam</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.genius.com/cd7a7d1b325dbdf688340169b54efd42.1000x1000x1.jpg" alt="Sirra Album Art">
+                                </div>
+                                <p class="card-title">Sirra</p>
+                                <p class="card-subtitle">Guru Randhawa</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://images.genius.com/d6c0d362fafa78f5cac77a125b99708f.554x554x1.jpg" alt="Summer High Album Art">
+                                </div>
+                                <p class="card-title">Summer High</p>
+                                <p class="card-subtitle">AP Dhillon</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://i.scdn.co/image/ab67616d00001e02566512ae287544a1b8e88046" alt="Lor Lor Album Art">
+                                </div>
+                                <p class="card-title">Lor Lor</p>
+                                <p class="card-subtitle">Jassie Gill</p>
+                            </div>
+                            <div class="card">
+                        <div class="card-image-wrapper square">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4f/Aashiqui_2.jpeg/250px-Aashiqui_2.jpeg" alt="Aashiqui Album Art">
+                        </div>
+                        <p class="card-title">Aashiqui</p>
+                        <p class="card-subtitle">Mithoon</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-image-wrapper square gradient-trending-4">
+                            <img src="https://i.scdn.co/image/ab67616d0000b273d20231861e86a6f74ef2393e" alt="Water Album Art">
+                        </div>
+                        <p class="card-title">Water</p>
+                        <p class="card-subtitle">Tyla</p>
+                    </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h2>Popular Artists</h2>
+                            <a href="#" class="show-all">Show All</a>
+                        </div>
+                        <div class="card-list">
+                            <div class="card">
+                                <div class="card-image-wrapper circle">
+                                    <img src="https://i.scdn.co/image/ab6761610000517478e45cfa4697ce3c437cb455" alt="Sabrina Carpenter">
+                                </div>
+                                <p class="card-title" style="text-align: center;">Sabrina Carpenter</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper circle">
+                                    <img src="https://a10.gaanacdn.com/gn_img/artists/Dk9KNk23Bx/k9KNqJJbBx/size_m_1739172212.jpg" alt="Arijit Singh">
+                                </div>
+                                <p class="card-title" style="text-align: center;">Arijit Singh</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper circle">
+                                    <img src="https://www.restartbooking.com/_next/image?url=%2Fimg%2Fartists%2Falan-walker.png&w=1080&q=75" alt="Alan Walker">
+                                </div>
+                                <p class="card-title" style="text-align: center;">Alan Walker</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper circle">
+                                    <img src="https://i.scdn.co/image/ab6761610000e5ebbc7e4fffd515b47ff1ebbc1f" alt="Honey Singh">
+                                </div>
+                                <p class="card-title" style="text-align: center;">Honey Singh</p>
+                            </div>
+                            <div class="card">
+                        <div class="card-image-wrapper circle">
+                            <img src="https://i.scdn.co/image/ab67616100005174b19af0ea736c6228d6eb539c" alt="A.R. Rahman">
+                        </div>
+                        <p class="card-title">&nbsp;&nbsp;&nbsp;A.R. Rahman</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-image-wrapper circle">
+                            <img src="https://i.scdn.co/image/ab6761610000e5eb58b4b9419486550f6fda0535" alt="Shawn Mendes">
+                        </div>
+                        <p class="card-title">&nbsp;Shawn Mendes</p>
+                    </div>
+                    <div class="card">
+                        <div class="card-image-wrapper circle">
+                            <img src="https://i.scdn.co/image/ab6761610000e5ebfc043bea91ac91c222d235c9" alt="Diljit Dosanjh">
+                        </div>
+                        <p class="card-title">&nbsp;&nbsp;Diljit Dosanjh</p>
+                    </div>
+                        </div>
+
+                        <div class="section-header">
+                            <h2>Recently Played</h2>
+                        </div>
+                        <div class="card-list">
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/The_Weeknd_-_Blinding_Lights.png/250px-The_Weeknd_-_Blinding_Lights.png" alt="Blinding Lights Album Art">
+                                </div>
+                                <p class="card-title">Blinding Lights</p>
+                                <p class="card-subtitle">The Weeknd</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://c.saavncdn.com/687/Dhundhala-Hindi-2022-20220214181940-500x500.jpg" alt="Dhundhla Album Art">
+                                </div>
+                                <p class="card-title">Dhundhla</p>
+                                <p class="card-subtitle">Yashraj, Talwinder</p>
+                            </div>
+                            <div class="card">
+                                <div class="card-image-wrapper">
+                                    <img src="https://cdn-images.dzcdn.net/images/cover/dd6fe7fa9267185c4b835bd4f155d1d2/1900x1900-000000-81-0-0.jpg" alt="STAY Album Art">
+                                </div>
+                                <p class="card-title">STAY</p>
+                                <p class="card-subtitle">The KID LAROI</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="player-container">
+                        <div class="header">
+                            <h2>Now Playing</h2>
+                        </div>
+                        <div class="album-art-wrapper">
+                            <img src="https://cdn-images.dzcdn.net/images/cover/dfeac2fb14b2d92003c5bfd31651fba7/1900x1900-000000-81-0-0.jpg" alt="The Beatles - Let It Be" class="album-art">
+                        </div>
+                        <div class="song-details">
+                            <h2 class="song-title">LET IT BE</h2>
+                            <p class="artist-name">The Beatles</p>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar">
+                                <div class="progress"></div>
+                            </div>
+                            <div class="time-stamps">
+                                <span class="current-time">0:59</span>
+                                <span class="total-time">2:00</span>
+                            </div>
+                        </div>
+                        <div class="controls">
+                            <i class="fas fa-backward skip-backward"></i>
+                            <div class="play-button">
+                                <i class="fas fa-play play-icon"></i>
+                            </div>
+                            <i class="fas fa-forward skip-forward"></i>
+                        </div>
+                        <div class="bottom-icons">
+                            <i class="fas fa-random shuffle-icon"></i>
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const certiSection = document.querySelector('.certi');
     const certiTitle = document.querySelector('.certi-title');
     
-    // NEW: Select participation title
     const participationTitle = document.querySelector('.participation-title');
 
     const safariWindows = document.querySelectorAll('.safari-window, .safari-window1, .safari-window2, .safari-window3, .safari-window4');
@@ -56,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 if(certiTitle) certiTitle.classList.add('active');
-                // NEW: Animate participation title with delay
+        
                 if(participationTitle) {
                     setTimeout(() => {
                         participationTitle.classList.add('active');
@@ -152,3 +151,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+    const contactSection = document.querySelector('.contact');
+    const contactTitle = document.querySelector('.contact-title');
+    const socialCards = document.querySelectorAll('.social-card');
+
+    const contactObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                if(contactTitle) contactTitle.classList.add('active');
+                
+                socialCards.forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('active');
+                    }, index * 100);
+                });
+            } else {
+                if(contactTitle) contactTitle.classList.remove('active');
+                socialCards.forEach(card => card.classList.remove('active'));
+            }
+        });
+    }, {
+        threshold: 0.3
+    });
+
+    if (contactSection) {
+        contactObserver.observe(contactSection);
+    }
