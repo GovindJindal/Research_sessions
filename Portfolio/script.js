@@ -16,7 +16,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const safariWindows = document.querySelectorAll('.safari-window, .safari-window1, .safari-window2, .safari-window3, .safari-window4');
 
-    if (nameTag && aboutSection) {
+    // --- HOME PAGE ANIMATION REPLAY (LINES ONLY) ---
+    
+    // 1. Select ONLY the vertical lines to animate again
+    const homeAnimatedElements = document.querySelectorAll('.vr1, .vr2, .vr3');
+
+    // 2. Observer to detect when we are back at the top
+    const homeReplayObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // We are back at the top! Restart animations for lines only.
+                homeAnimatedElements.forEach(el => {
+                    // "Reflow Hack" to restart CSS animation
+                    el.style.animation = 'none';
+                    void el.offsetWidth; // Trigger reflow
+                    el.style.animation = ''; // Remove inline style so CSS takes over
+                });
+            }
+        });
+    }, {
+        threshold: 0.1
+    });
+
+    if (nameTag) {
+        homeReplayObserver.observe(nameTag);
+        
         nameTag.addEventListener('click', () => {
             aboutSection.scrollIntoView({ 
                 behavior: 'smooth',
@@ -24,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+    // --- END HOME PAGE LOGIC ---
 
     const aboutObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -150,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
             currentBranch.classList.toggle('expanded');
         });
     });
-});
 
     const contactSection = document.querySelector('.contact');
     const contactTitle = document.querySelector('.contact-title');
@@ -178,3 +202,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contactSection) {
         contactObserver.observe(contactSection);
     }
+});

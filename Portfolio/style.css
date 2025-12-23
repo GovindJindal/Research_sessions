@@ -47,9 +47,9 @@ body {
 }
 
 @keyframes glowPulse {
-    0% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.1); }
-    100% { opacity: 0.5; transform: scale(1); }
+    0% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.1); }
+    100% { opacity: 0.6; transform: scale(1); }
 }
 
 .line {
@@ -73,13 +73,13 @@ body {
 .vr2 { animation-delay: 0.4s; }
 .vr3 { animation-delay: 0.6s; }
 
-
 .box1, .box2, .box3, .box4, .box5 {
     position: fixed; 
     border-radius: 50%;
     filter: blur(80px);
     z-index: 0;
     animation: glowPulse 8s infinite alternate;
+    mix-blend-mode: screen; 
 }
 
 .box1 {
@@ -87,7 +87,7 @@ body {
     width: 400px;
     top: 20%;
     left: 60%;
-    background: radial-gradient(circle, rgba(41, 151, 255, 0.4), transparent);
+    background: radial-gradient(circle, rgba(50, 180, 255, 0.8), transparent);
 }
 
 .box2 {
@@ -95,7 +95,7 @@ body {
     width: 300px;
     top: 5%;
     left: 5%;
-    background: radial-gradient(circle, rgba(157, 0, 255, 0.3), transparent);
+    background: radial-gradient(circle, rgba(190, 50, 255, 0.8), transparent);
     animation-delay: 1s;
 }
 
@@ -104,7 +104,7 @@ body {
     width: 250px;
     top: 60%;
     left: 20%;
-    background: radial-gradient(circle, rgba(255, 0, 122, 0.25), transparent);
+    background: radial-gradient(circle, rgba(255, 20, 147, 0.8), transparent);
     animation-delay: 2s;
 }
 
@@ -113,7 +113,7 @@ body {
     width: 350px;
     top: 40%;
     left: 80%;
-    background: radial-gradient(circle, rgba(0, 255, 200, 0.2), transparent);
+    background: radial-gradient(circle, rgba(0, 255, 230, 0.75), transparent);
     animation-delay: 3s;
 }
 
@@ -122,7 +122,7 @@ body {
     width: 150px;
     top: 80%;
     left: 50%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.7), transparent);
 }
 
 .tag {
@@ -159,7 +159,6 @@ body {
     opacity: 0;
 }
 
-
 .safari-window, .safari-window1, .safari-window2, .safari-window3, .safari-window4 {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
@@ -187,7 +186,6 @@ body {
     z-index: 100;
     cursor: pointer;
 }
-
 
 .safari-window { width: 500px; top: 30px; left: 163px; animation-delay: 0.2s; }
 .safari-window1 { width: 610px; top: 480px; left: 800px; animation-delay: 0.4s; z-index: 3; }
@@ -280,11 +278,14 @@ body {
 .about_me {
     height: 100vh;
     width: 100%;
-    background-color: var(--bg-dark);
+    background-color: rgba(5, 5, 7, 0.6); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
     position: absolute;
     top: 100vh;
     left: 0;
     z-index: 10;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .per_img {
@@ -316,7 +317,7 @@ body {
 .hr {
     width: 0px;
     height: 2px;
-    background-image: var(--accent-gradient); /* Fusion Gradient */
+    background-image: var(--accent-gradient);
     transition: width 1.5s cubic-bezier(0.22, 1, 0.36, 1);
     box-shadow: 0 0 10px rgba(157, 0, 255, 0.5);
 }
@@ -366,11 +367,14 @@ body {
 .certi {
     height: 120vh;
     width: 100%;
-    background: linear-gradient(to bottom, var(--bg-dark), #0f0f12);
+    background: linear-gradient(to bottom, rgba(5, 5, 7, 0.6), rgba(15, 15, 18, 0.8));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: absolute;
     top: 200vh;
     left: 0;
     z-index: 10;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .certi-title, .participation-title {
@@ -431,7 +435,7 @@ body {
     transform: translateY(-10px) scale(1.02);
     background: rgba(255, 255, 255, 0.07);
     border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 20px 50px rgba(41, 151, 255, 0.2); /* Blue glow */
+    box-shadow: 0 20px 50px rgba(41, 151, 255, 0.2);
 }
 
 .certi-header {
@@ -472,12 +476,15 @@ body {
 .lang {
     height: 105vh;
     width: 100%;
-    background: linear-gradient(to bottom, var(--bg-dark), #0f0f12); 
+    background: linear-gradient(to bottom, rgba(15, 15, 18, 0.8), rgba(5, 5, 7, 0.6));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: absolute;
     top: 320vh;
     left: 0;
     z-index: 10;
     overflow: hidden;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .lang-title {
@@ -546,7 +553,6 @@ body {
     margin-top: 30px; 
 }
 
-/* Glass Node Cards */
 .node-content {
     background: rgba(20, 20, 23, 0.8);
     backdrop-filter: blur(20px);
@@ -606,19 +612,21 @@ body {
     border-left: 2px solid #2997ff;
 }
 
-/* Contact Section */
 .contact {
     height: 80vh;
     width: 100%;
-    background: linear-gradient(to bottom, #0f0f12, var(--bg-dark));
+    background: linear-gradient(to bottom, rgba(5, 5, 7, 0.6), rgba(5, 5, 7, 0.95));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     position: absolute;
-    top: 425vh; /* Starts where Lang section ends */
+    top: 425vh; 
     left: 0;
     z-index: 10;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .contact-title {
@@ -666,7 +674,6 @@ body {
     transform: translateY(40px);
 }
 
-/* Specific Hover Colors */
 .social-card:hover {
     transform: translateY(-10px) scale(1.05);
     color: #fff;
